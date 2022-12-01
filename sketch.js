@@ -76,11 +76,15 @@ function setup() {
 
   button = createButton("Happy");
   button.addClass('happy')
-  button.mousePressed(greetZero);
+  button.mousePressed(greetOne);
 
   button = createButton("Sad");
   button.addClass('sad')
-  button.mousePressed(greetOne);
+  button.mousePressed(greetZero);
+
+  button = createButton("Meh");
+  button.addClass('meh')
+  button.mousePressed(greetTwo);
 
   textAlign(CENTER);
   textSize(50);
@@ -100,6 +104,16 @@ function greetZero() {
 function greetOne(){
   message = {
     "  ledControl  ": "1"
+  }
+
+  if (connected) {
+    client.send('esp32/sub', JSON.stringify(message))
+  }
+}
+
+function greetTwo(){
+  message = {
+    "  ledControl  ": "2"
   }
 
   if (connected) {
