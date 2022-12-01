@@ -1,0 +1,21 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+button{
+  display:block;
+  width: 300px;
+  padding:30px;
+  font-size: 50px;
+  margin: 30px auto 30px auto;
+}
+
+.happy{background-color:rgb(240, 119, 234)}
+.sad{background-color:rgb(255,255,0)}
+
+
