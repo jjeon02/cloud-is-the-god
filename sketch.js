@@ -1,8 +1,7 @@
 // MQTT client details:
 let broker = {
   hostname: "23.21.151.236",
-  // port: 9001, //for website
-  port:"https://jjeon02.github.io/cloud-is-the-god/",
+  port: 9001, //for website
   protocol: "mqtt",
 };
 
