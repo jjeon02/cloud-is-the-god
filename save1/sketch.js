@@ -68,6 +68,11 @@ function setup() {
     onSuccess: onConnect, // callback function for when you connect
   });
 
+  // create canvas
+  // createCanvas(710, 400);
+
+  // input = createInput();
+  // input.position(20, 65);
 
   button = createButton("Happy");
   button.addClass('happy')
@@ -94,7 +99,6 @@ function greetZero() {
   if (connected) {
     client.send('esp32/sub', JSON.stringify(message))
   }
-  console.log(message)
 }
 
 function greetOne(){
@@ -105,7 +109,6 @@ function greetOne(){
   if (connected) {
     client.send('esp32/sub', JSON.stringify(message))
   }
-  console.log(message)
 }
 
 function greetTwo(){
@@ -116,7 +119,6 @@ function greetTwo(){
   if (connected) {
     client.send('esp32/sub', JSON.stringify(message))
   }
-  console.log(message)
 }
 
 function draw() {}
