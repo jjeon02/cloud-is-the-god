@@ -94,7 +94,6 @@ function greetZero() {
   if (connected) {
     client.send('esp32/sub', JSON.stringify(message))
   }
-  console.log(message)
 }
 
 function greetOne(){
@@ -105,7 +104,6 @@ function greetOne(){
   if (connected) {
     client.send('esp32/sub', JSON.stringify(message))
   }
-  console.log(message)
 }
 
 function greetTwo(){
@@ -116,7 +114,6 @@ function greetTwo(){
   if (connected) {
     client.send('esp32/sub', JSON.stringify(message))
   }
-  console.log(message)
 }
 
 function draw() {}
