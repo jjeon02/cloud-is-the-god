@@ -1,3 +1,8 @@
+//SERIAL SHIT
+var serial;          // variable to hold an instance of the serialport library
+var portName = '/dev/tty.usbserial-1120'; // fill in your serial port name here
+var outByte = 3;                       // for outgoing data
+
 // MQTT client details:
 let broker = {
   hostname: "23.21.151.236",
@@ -68,6 +73,13 @@ function setup() {
     onSuccess: onConnect, // callback function for when you connect
   });
 
+  //SERIAL SHIT
+  serial = new p5.SerialPort();    // make a new instance of the serialport library
+  serial.on('error', serialError); // callback for errors
+  serial.on('list', printList);       // set a callback function for the serialport list event
+  serial.list();                   // list the serial ports
+  serial.open(portName);           // open a serial port
+
 
   button = createButton("Happy");
   button.addClass('happy')
@@ -94,6 +106,9 @@ function greetZero() {
   if (connected) {
     client.send('esp32/sub', JSON.stringify(message))
   }
+
+  serial.write("0");
+  console.log(message)
 }
 
 function greetOne(){
@@ -104,6 +119,8 @@ function greetOne(){
   if (connected) {
     client.send('esp32/sub', JSON.stringify(message))
   }
+  serial.write("1");
+  console.log(message)
 }
 
 function greetTwo(){
@@ -114,10 +131,21 @@ function greetTwo(){
   if (connected) {
     client.send('esp32/sub', JSON.stringify(message))
   }
+  serial.write("2");
+  console.log(message)
 }
 
 function draw() {}
 
-//happy: nulticolor
-// sad: grey color
-// since it already has two inout here, we can do crazy code with arduino using the LED code Harshi and Jade made
+function serialError(err) {
+  console.log('Something went wrong with the serial port. ' + err);
+}
+
+// get the list of ports:
+function printList(portList) {
+  // portList is an array of serial port names
+  for (var i = 0; i < portList.length; i++) {
+    // Display the list the console:
+    console.log("port " + i + ": " + portList[i]);
+  }
+}
