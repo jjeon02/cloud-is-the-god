@@ -1,7 +1,7 @@
-//SERIAL SHIT
-var serial;          // variable to hold an instance of the serialport library
-var portName = '/dev/tty.usbserial-1120'; // fill in your serial port name here
-var outByte = 3;                       // for outgoing data
+//SERIAL
+var serial; // variable to hold an instance of the serialport library
+var portName = "/dev/tty.usbserial-1130"; // fill in your serial port name here
+var outByte = "<" + 3 + ">"; // for outgoing data
 
 // MQTT client details:
 let broker = {
@@ -51,9 +51,10 @@ function onMessageArrived(message) {
   console.log(message.destinationName);
   // this is the message payload
   console.log("message as string: ", message.payloadString);
-  // we can convert our string into a json obj
-  const obj = JSON.parse(message.payloadString);
-  console.log("message as JSON obj", obj);
+  serial.write(message.payloadString);
+
+  // const obj = (message.payloadString);
+  // console.log("message as obj", obj);
 }
 
 function setup() {
@@ -73,72 +74,69 @@ function setup() {
     onSuccess: onConnect, // callback function for when you connect
   });
 
-  //SERIAL SHIT
-  serial = new p5.SerialPort();    // make a new instance of the serialport library
-  serial.on('error', serialError); // callback for errors
-  serial.on('list', printList);       // set a callback function for the serialport list event
-  serial.list();                   // list the serial ports
-  serial.open(portName);           // open a serial port
-
+  //SERIAL
+  serial = new p5.SerialPort(); // make a new instance of the serialport library
+  serial.on("error", serialError); // callback for errors
+  serial.on("list", printList); // set a callback function for the serialport list event
+  serial.list(); // list the serial ports
+  serial.open(portName); // open a serial port
 
   button = createButton("Happy");
-  button.addClass('happy')
-  button.mousePressed(greetOne);
-
-  button = createButton("Sad");
-  button.addClass('sad')
+  button.addClass("happy");
   button.mousePressed(greetZero);
 
-  button = createButton("Meh");
-  button.addClass('meh')
-  button.mousePressed(greetTwo);
+  button = createButton("Sad");
+  button.addClass("sad");
+  button.mousePressed(greetOne);
 
-  textAlign(CENTER);
-  textSize(50);
- 
+  button = createButton("Meh");
+  button.addClass("meh");
+  button.mousePressed(greetTwo);
 }
 
 function greetZero() {
-  message = {
-    "  ledControl  ": "0"
-  }
+  // message = {
+  //   "  ledControl  ": "0",
+  // };
+
+  outByte = "<" + 0 + ">";
 
   if (connected) {
-    client.send('esp32/sub', JSON.stringify(message))
+    // client.send("esp32/sub", JSON.stringify(message));
+    client.send("esp32/sub", outByte);
   }
 
-  serial.write("0");
-  console.log(message)
+  serial.write(outByte);
+  // console.log(message);
+  console.log(outByte);
 }
 
-function greetOne(){
-  message = {
-    "  ledControl  ": "1"
-  }
+function greetOne() {
+
+  outByte = "<" + 1 + ">";
 
   if (connected) {
-    client.send('esp32/sub', JSON.stringify(message))
+    client.send("esp32/sub", outByte);
   }
-  serial.write("1");
-  console.log(message)
+
+  serial.write(outByte);
+  console.log(outByte);
 }
 
-function greetTwo(){
-  message = {
-    "  ledControl  ": "2"
+function greetTwo() {
+  if (connected) {
+    client.send("esp32/sub", outByte);
   }
 
-  if (connected) {
-    client.send('esp32/sub', JSON.stringify(message))
-  }
-  serial.write("2");
-  console.log(message)
+  outByte = "<" + 2 + ">";
+  serial.write(outByte);
+  console.log(outByte);
 }
 
 function draw() {}
 
 function serialError(err) {
-  console.log('Something went wrong with the serial port. ' + err);
+  console.log("Something went wrong with the serial port. " + err);
 }
 
 // get the list of ports:
