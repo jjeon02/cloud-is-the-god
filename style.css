@@ -2,20 +2,19 @@ html, body {
   margin: 0;
   padding: 0;
   background: url("https://cdn.glitch.global/f3e32e13-0ea0-4d6a-8ff6-08a1a5d9bc9f/cloud.jpg?v=1669930911908") no-repeat center fixed;
+  background-size: 200% 200%; 
 }
 
 *{transition: .2s linear;}
 
-canvas {
-  display: block;
-}
+canvas {display: block;}
 
 button{
   display:block;
   width: 300px;
   padding:30px;
   font-size: 50px;
-  margin: 30px auto 30px auto;
+  margin: 50px auto 50px auto;
   border-radius: 50%;
   box-shadow: 0px 0px 0px #000;
   transform: translateX(0px) translateY(0px);
